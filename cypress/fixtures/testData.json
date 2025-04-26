@@ -1,0 +1,33 @@
+{
+  "createAccountData":{
+      "firstName": "TestF_",
+      "lastName": "TestL_",
+      "emailPrefix": "user_",
+      "emailDomain": "example.com",
+      "password": "Test@1234567890-"
+  },
+    "messages": {
+      "registeredSuccessMessage": "Thank you for registering with Main Website Store.",
+      "signedOutMessage": "You are signed out",
+      "orderPlacedSuccessMessage":"Thank you for your purchase!",
+      "emptyItemsInWishList":"You have no items in your wish list."
+    },
+    "productsToAdd": [
+      "Overnight Duffle",
+      "Driven Backpack"
+    ],
+    "address":{
+        "streetAdress":"Test Automation",
+        "city":"Test City",
+        "state": "New York",
+        "postalCode":"12345",
+        "country":"United Arab Emirates",
+        "phoneNumber": "8989898989"
+    },
+    "productsPrices":["$45.00","$36.00"],
+    "fixedPrice":["$10.00"],
+    "wishListProduct":["Voyage Yoga Bag"],
+    "productToSearch":"Radiant Tee"
+
+  }
+  
