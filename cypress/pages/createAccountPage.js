@@ -1,33 +1,33 @@
-export class createAccountPage{
+export class createAccountPage {
 
     weblocators = {
-        firstName : "#firstname",
-        lastName : "#lastname",
-        email:"#email_address",
+        firstName: "#firstname",
+        lastName: "#lastname",
+        email: "#email_address",
         password: "#password",
-        confrimPassword : "#password-confirmation",
-        createAnAccount : "button[title='Create an Account']"
+        confrimPassword: "#password-confirmation",
+        createAnAccount: "button[title='Create an Account']"
     }
 
-    enterFirstName(FName){
-        cy.get(this.weblocators.firstName).type(FName)
+    enterFirstName(FName) {
+        cy.get(this.weblocators.firstName).type(FName);
     }
 
-    enterLastName(LName){
-        cy.get(this.weblocators.lastName).type(LName)
+    enterLastName(LName) {
+        cy.get(this.weblocators.lastName).type(LName);
     }
 
-    enterEmail(email){
-        cy.get(this.weblocators.email).type(email)
+    enterEmail(email) {
+        cy.get(this.weblocators.email).type(email);
     }
 
-    enterPassword(password){
-        cy.get(this.weblocators.password).type(password)
-        cy.get(this.weblocators.confrimPassword).type(password)
+    enterPassword(password) {
+        cy.get(this.weblocators.password).type(password);
+        cy.get(this.weblocators.confrimPassword).type(password);
     }
 
-    clickCreateAnAccount(){
-        cy.get(this.weblocators.createAnAccount).click()
+    clickCreateAnAccount() {
+        cy.get(this.weblocators.createAnAccount).click();
     }
 
 }

@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cypress run",
-    "cy:testA": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep='TestCase_A'",
-    "cy:testB": "npx cypress run --spec 'cypress/e2e/tests.Assessment.cy.js' --env grep='TestCase_B'",
-    "cy:testC": "npx cypress run --spec 'cypress/e2e/tests.Assessment.cy.js' --env grep='TestCase_C'",
-    "cy:testD": "npx cypress run --spec 'cypress/e2e/tests.Assessment.cy.js' --env grep='TestCase_D'"
+    "cy:testA": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_A",
+    "cy:testB": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_B",
+    "cy:testC": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_C",
+    "cy:testD": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_D"
   },
   "author": "",
   "license": "ISC",

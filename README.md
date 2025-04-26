@@ -63,10 +63,10 @@ Updated Scripts Section in package.json
 In the package.json file, I've added the following scripts to run specific test cases using --grep to filter the tests by their names:
 
     "scripts": {
-    "cy:testA": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep='TestCase_A'",
-    "cy:testB": "npx cypress run --spec 'cypress/e2e/tests.Assessment.cy.js' --env grep='TestCase_B'",
-    "cy:testC": "npx cypress run --spec 'cypress/e2e/tests.Assessment.cy.js' --env grep='TestCase_C'",
-    "cy:testD": "npx cypress run --spec 'cypress/e2e/tests.Assessment.cy.js' --env grep='TestCase_D'"
+    "cy:testA": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_A",
+    "cy:testB": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_B",
+    "cy:testC": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_C",
+    "cy:testD": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_D"
     }
 
 📌 Notes
@@ -83,6 +83,9 @@ In the package.json file, I've added the following scripts to run specific test 
         Sanity Tests
         Smoke Tests
 
+✅ I used an enum.js to avoid hardcoding command strings directly inside the tests. It improves reusability and avoids typos, following clean code practices.
+
 
 📬 Contact
-For questions or feedback, feel free to reach out to [anandjeyakumar7@gmail.com].
+For questions or feedback, feel free to reach out to:
+anandjeyakumar7@gmail.com

@@ -1,4 +1,4 @@
-import { should } from "chai"
+import { Commands, WaitTimes } from '../support/enum';
 export class shippingDetailsPages{
 
 
@@ -26,16 +26,13 @@ export class shippingDetailsPages{
         return cy.get(this.webLocators.orderSuccessfullMessage)
     }
 
-    getButtonByText(text){
-        return cy.contains('button', text)
-    }
-
     selectCountry(country){
         cy.get(this.webLocators.country).select(country)
     }
 
     enterStreet(street){
-        cy.get(this.webLocators.street).should('be.visible').type(street)
+        cy.wait(WaitTimes.WAIT_2_SECONDS);
+        cy.get(this.webLocators.street).should(Commands.BE_VISIBLE).type(street)
     }
 
     enterCity(city){
@@ -54,20 +51,8 @@ export class shippingDetailsPages{
         cy.get(this.webLocators.phoneNumber).type(phoneNumber)
     }
 
-    getFixedAmount() {
-        return cy.get(this.webLocators.shippingMethods)  // Get the parent container for shipping methods
-            .contains('tr', 'Fixed')  // Find the <tr> containing the text 'Fixed'
-            .find('td:nth-child(2)')  // Within that row, get the second column (td)
-            .invoke('text')  // Retrieve the text inside the second column
-            .then((text) => {
-                cy.log('Fixed method price:', text);
-                // return text; // Return the price as a promise
-            });
-    }
-    
-
     waitTillTheLoaderDisappear() {
-        cy.get(this.webLocators.loader).should('not.be.visible');
+        cy.get(this.webLocators.loader).should(Commands.NOT_BE_VISIBLE);
     }
 
     expandOrderSummmary(){
@@ -96,8 +81,8 @@ export class shippingDetailsPages{
     const fixedPriceNumber = parseFloat(fixedPrice); // Convert to number
     const newPriceArray = [sum, fixedPriceNumber];
     const sumWithDollar = `$${sum.toFixed(2)}`
-    cy.get(this.webLocators.subTotal).should('have.text',sumWithDollar)
-    cy.get(this.webLocators.shippingAmount).should('have.text',fixedAmount[0])
+    cy.get(this.webLocators.subTotal).should(Commands.HAVE_TEXT,sumWithDollar)
+    cy.get(this.webLocators.shippingAmount).should(Commands.HAVE_TEXT,fixedAmount[0])
     let totalAmount = 0;
     for (let i of newPriceArray) {
         totalAmount += i; 

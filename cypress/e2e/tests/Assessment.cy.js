@@ -3,6 +3,9 @@ import { generateRandomUser } from "../../support/dataUtils";
 import { registerUser } from "../../support/apiUtils";
 import { beforeEach } from "mocha"
 import { pageManager } from '../../support/pageManager';
+require('cypress-grep')();
+import { Commands } from '../../support/enum';
+
 
 const poManager  = new pageManager();
 const homePageObj  =  poManager .getHomePage()
@@ -28,24 +31,24 @@ describe("Assessment",()=>{
         createAccountPageObj.enterEmail(user.email);
         createAccountPageObj.enterPassword(user.password);
         createAccountPageObj.clickCreateAnAccount();
-        myAccountPageObj.getRegisterMessage().should('contain', testData.messages.registeredSuccessMessage)
-        myAccountPageObj.getWelcomeText().should('contain',user.firstName).and('contain',user.lastName)
-        myAccountPageObj.getContactInformation().should('contain',user.email)
+        myAccountPageObj.getRegisterMessage().should(Commands.CONTAIN, testData.messages.registeredSuccessMessage)
+        myAccountPageObj.getWelcomeText().should(Commands.CONTAIN,user.firstName).and(Commands.CONTAIN,user.lastName)
+        myAccountPageObj.getContactInformation().should(Commands.CONTAIN,user.email)
         myAccountPageObj.clickOnActionDropdown()
-        myAccountPageObj.clickOnTextLink('Sign Out')
-        myAccountPageObj.getSignOut().should('have.text',testData.messages.signedOutMessage)
-        homePageObj.clickOnLink('Sign In')
+        myAccountPageObj.clickOnTextLink(testData.buttonsText.signOut)
+        myAccountPageObj.getSignOut().should(Commands.HAVE_TEXT,testData.messages.signedOutMessage)
+        homePageObj.clickOnLink(testData.buttonsText.signIn)
         loginPageObj.enterEmail(user.email)
         loginPageObj.enterPassword(user.password)
         loginPageObj.clickOnSignIn()
-        myAccountPageObj.getContactInformation().should('contain',user.email)
+        myAccountPageObj.getContactInformation().should(Commands.CONTAIN,user.email)
     })
 
 
     it("TestCase_B - Place order with multiple products (apply price calculation on checks)", () => {
         homePageObj.clickOnLink('Create an Account')
         cy.createNewUser(user.firstName, user.lastName, user.email, user.password);
-        myAccountPageObj.getRegisterMessage().should('contain', testData.messages.registeredSuccessMessage);
+        myAccountPageObj.getRegisterMessage().should(Commands.CONTAIN, testData.messages.registeredSuccessMessage);
         myAccountPageObj.mouseOverAndClickSubMenu("Gear", "Bags");
         productsPageObj.verifySubMenuBags();
         productsPageObj.addToCart(testData.productsToAdd);
@@ -56,10 +59,10 @@ describe("Assessment",()=>{
         shippingDetailsPagesObj.expandOrderSummmary();
         shippingDetailsPagesObj.verifyProductInOrderSummary(testData.productsToAdd,testData.productsPrices)
         shippingDetailsPagesObj.waitTillTheLoaderDisappear();
-        shippingDetailsPagesObj.getButtonByText("Next").click();
+        cy.getElementByButtonText(testData.buttonsText.next).click()
         shippingDetailsPagesObj.validateOrderSummaryAmountDetails(testData.productsPrices,testData.fixedPrice)
-        shippingDetailsPagesObj.getButtonByText("Place Order").click();
-        shippingDetailsPagesObj.getOrderSuccessfullMessage().should('contain.text',testData.messages.orderPlacedSuccessMessage)
+        cy.getElementByButtonText(testData.buttonsText.placeOrder).click()
+        shippingDetailsPagesObj.getOrderSuccessfullMessage().should(Commands.CONTAIN,testData.messages.orderPlacedSuccessMessage)
     });
 
 
@@ -75,17 +78,16 @@ describe("Assessment",()=>{
         productsPageObj.addToWishList(testData.wishListProduct)
         myWishListPageObj.addToCart(testData.wishListProduct)
         myWishListPageObj.getWishListEmptyMessage(testData.messages.emptyItemsInWishList)
-        myWishListPageObj.getCartItemNumber().should('have.text',testData.wishListProduct.length)
+        myWishListPageObj.getCartItemNumber().should(Commands.HAVE_TEXT,testData.wishListProduct.length)
         productsPageObj.clickOnShowCartIcon();
         productsPageObj.clickOnProceedToCheckout();
         cy.waitForFullLoad()
         cy.enterAddress()
         shippingDetailsPagesObj.expandOrderSummmary();
         shippingDetailsPagesObj.waitTillTheLoaderDisappear();
-        shippingDetailsPagesObj.getButtonByText("Next").click();
-        shippingDetailsPagesObj.getButtonByText("Place Order").click();
-        shippingDetailsPagesObj.getOrderSuccessfullMessage().should('contain.text',testData.messages.orderPlacedSuccessMessage)
-
+        cy.getElementByButtonText(testData.buttonsText.next).click()
+        cy.getElementByButtonText(testData.buttonsText.placeOrder).click()
+        shippingDetailsPagesObj.getOrderSuccessfullMessage().should(Commands.CONTAIN,testData.messages.orderPlacedSuccessMessage)
     })
 
     it("TestCase_D - Search and validate results",()=>{
@@ -94,7 +96,7 @@ describe("Assessment",()=>{
         homePageObj.getSearchResult()
         .filter((index,el) => el.innerText.trim() === testData.productToSearch)
         .click();
-        homePageObj.getHeader().should('contain.text',testData.productToSearch)
-        productsPageObj.getProduct(testData.productToSearch).should('be.visible').and('contain.text',testData.productToSearch)
+        homePageObj.getHeader().should(Commands.CONTAIN_TEXT,testData.productToSearch)
+        productsPageObj.getProduct(testData.productToSearch).should(Commands.BE_VISIBLE).and(Commands.CONTAIN_TEXT,testData.productToSearch)
     })
 })

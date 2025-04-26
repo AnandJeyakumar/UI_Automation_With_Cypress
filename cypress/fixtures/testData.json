@@ -27,7 +27,14 @@
     "productsPrices":["$45.00","$36.00"],
     "fixedPrice":["$10.00"],
     "wishListProduct":["Voyage Yoga Bag"],
-    "productToSearch":"Radiant Tee"
+    "productToSearch":"Radiant Tee",
+    "buttonsText": {
+    "signOut": "Sign Out",
+    "placeOrder": "Place Order",
+    "next": "Next",
+    "signIn": "Sign In",
+    "addToCart":"Add to Cart"
+  }
 
   }
   

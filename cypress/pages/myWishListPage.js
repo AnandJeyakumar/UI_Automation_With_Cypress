@@ -1,11 +1,13 @@
-export class myWishListPage{
+import { WaitTimes, Commands } from '../support/enum';
+
+export class myWishListPage {
 
     webLocators = {
-        productItems:".product-item",
-        addToCart:"button.primary[title='Add to Cart']",
+        productItems: ".product-item",
+        addToCart: "button.primary[title='Add to Cart']",
         productAddedMessage: ".message-success div",
-        wishListEmptyMessage:".empty",
-        cartItemNumber:".counter-number"
+        wishListEmptyMessage: ".empty",
+        cartItemNumber: ".counter-number"
     }
 
     getCartItemNumber() {
@@ -16,31 +18,28 @@ export class myWishListPage{
         return cy.get(this.webLocators.productAddedMessage);
     }
 
-    getWishListEmptyMessage(){
+    getWishListEmptyMessage() {
         return cy.get(this.webLocators.wishListEmptyMessage);
-
     }
 
     addToCart(products) {
         cy.log("Inside Products Loop");
-        cy.waitForFullLoad()
-        cy.get('.copyright > span').should('be.visible')
+        cy.waitForFullLoad();
+        cy.get('.copyright > span').should(Commands.BE_VISIBLE);
 
         products.forEach(product => {
             cy.log(`Adding product: ${product}`);
-            // cy.wait(2000)
-            cy.reloadIfErrorVisible()
+            cy.reloadIfErrorVisible();
             cy.contains(this.webLocators.productItems, product)
-            .scrollIntoView()
-            .should('be.visible')
-            .realHover()
-            .find(this.webLocators.addToCart) 
-            .should('exist')
-            .click({ force: true });
-            cy.waitForFullLoad()
-            // cy.wait(2000)
-            cy.reloadIfErrorVisible()
-            this.getProductAddedMessage().should('contain', product);
+                .scrollIntoView()
+                .should(Commands.BE_VISIBLE)
+                .realHover()
+                .find(this.webLocators.addToCart)
+                .should(Commands.EXIST)
+                .click({ force: true });
+            cy.waitForFullLoad();
+            cy.reloadIfErrorVisible();
+            this.getProductAddedMessage().should(Commands.CONTAIN, product);
         });
     }
 }
