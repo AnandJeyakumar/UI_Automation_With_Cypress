@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "e812b1a0-88ef-4cb0-baad-4c5740db283a",
+		"name": "assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40435888",
+		"_collection_link": "https://www.postman.com/anandjeyakumar73/workspace/assessmentapi/collection/40435888-e812b1a0-88ef-4cb0-baad-4c5740db283a?action=share&source=collection_link&creator=40435888"
+	},
+	"item": [
+		{
+			"name": "addPetToStore",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Basic check: Is the API responding with 200 OK?\r",
+							"pm.test(\"Status should be 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Validate important fields in the response\r",
+							"pm.test(\"Check response body values\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const expectedName = pm.environment.get(\"randomPetName\");\r",
+							"    pm.expect(responseJson).to.have.property(\"id\");\r",
+							"    pm.expect(responseJson.id).to.be.a(\"number\").above(0);\r",
+							"    pm.expect(responseJson.name).to.eql(expectedName);\r",
+							"    pm.expect(responseJson.category.name).to.eql(expectedName);\r",
+							"    pm.expect(responseJson.status).to.eql(\"available\");\r",
+							"});\r",
+							"\r",
+							"// Grab the Pet ID from the response and save it for later use\r",
+							"pm.test(\"Extract Pet ID from response\", function () {\r",
+							"    const responseText = pm.response.text();\r",
+							"    const petIdMatch = responseText.match(/\"id\":\\s*(\\d+)/);\r",
+							"    if (petIdMatch) {\r",
+							"        const petId = petIdMatch[1];\r",
+							"        console.log(\"Pet ID found:\", petId);\r",
+							"        pm.environment.set(\"petId\", petId);\r",
+							"        pm.expect(petId).to.not.be.undefined;\r",
+							"    } else {\r",
+							"        pm.expect.fail(\"Could not find Pet ID in response\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"// Negative case: Passing a string in ID field (should fail)\r",
+							"pm.test(\"Negative Test - ID as String\", function () {\r",
+							"    const wrongRequest = {\r",
+							"        \"id\": \"Text\",\r",
+							"        \"category\": { \"id\": 0, \"name\": \"string\" },\r",
+							"        \"name\": \"doggie\",\r",
+							"        \"photoUrls\": [\"string\"],\r",
+							"        \"tags\": [{ \"id\": 0, \"name\": \"string\" }],\r",
+							"        \"status\": \"available\"\r",
+							"    };\r",
+							"\r",
+							"    pm.sendRequest({\r",
+							"        url: 'https://petstore.swagger.io/v2/pet',\r",
+							"        method: 'POST',\r",
+							"        header: { 'Content-Type': 'application/json' },\r",
+							"        body: { mode: 'raw', raw: JSON.stringify(wrongRequest) }\r",
+							"    }, function (err, res) {\r",
+							"        console.log(\"Negative test response:\", res.text());\r",
+							"        pm.expect(res.code).to.eql(500);\r",
+							"\r",
+							"        const responseJson = res.json();\r",
+							"        pm.expect(responseJson).to.have.property(\"message\", \"something bad happened\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// What if body is completely empty?\r",
+							"pm.test(\"Empty Body Submission\", function () {\r",
+							"    const emptyRequest = {};\r",
+							"\r",
+							"    pm.sendRequest({\r",
+							"        url: 'https://petstore.swagger.io/v2/pet',\r",
+							"        method: 'POST',\r",
+							"        header: { 'Content-Type': 'application/json' },\r",
+							"        body: { mode: 'raw', raw: JSON.stringify(emptyRequest) }\r",
+							"    }, function (err, res) {\r",
+							"        console.log(\"Empty body response:\", res.text());\r",
+							"        pm.expect(res.code).to.eql(200);\r",
+							"\r",
+							"        const responseJson = res.json();\r",
+							"        pm.expect(responseJson).to.have.property(\"id\");\r",
+							"        pm.expect(responseJson.id).to.be.a('number').above(0);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Test special characters in pet name\r",
+							"pm.test(\"Special Characters in Name\", function () {\r",
+							"    const specialCharRequest = {\r",
+							"        \"id\": 0,\r",
+							"        \"category\": { \"id\": 0, \"name\": \"@#$%^&*\" },\r",
+							"        \"name\": \"@#$%^&*\"\r",
+							"    };\r",
+							"\r",
+							"    pm.sendRequest({\r",
+							"        url: 'https://petstore.swagger.io/v2/pet',\r",
+							"        method: 'POST',\r",
+							"        header: { 'Content-Type': 'application/json' },\r",
+							"        body: { mode: 'raw', raw: JSON.stringify(specialCharRequest) }\r",
+							"    }, function (err, res) {\r",
+							"        console.log(\"Special character response:\", res.text());\r",
+							"        pm.expect(res.code).to.eql(200);\r",
+							"\r",
+							"        const responseJson = res.json();\r",
+							"        pm.expect(responseJson.name).to.eql(\"@#$%^&*\");\r",
+							"        pm.expect(responseJson.category.name).to.eql(\"@#$%^&*\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"// Send extra invalid fields to see if API ignores them\r",
+							"pm.test(\"Send Extra Invalid Fields\", function () {\r",
+							"    const extraFieldRequest = {\r",
+							"        \"id\": 0,\r",
+							"        \"category\": { \"id\": 0, \"name\": \"cat\" },\r",
+							"        \"name\": \"Bob\",\r",
+							"        \"color\": \"blue\"\r",
+							"    };\r",
+							"\r",
+							"    pm.sendRequest({\r",
+							"        url: 'https://petstore.swagger.io/v2/pet',\r",
+							"        method: 'POST',\r",
+							"        header: { 'Content-Type': 'application/json' },\r",
+							"        body: { mode: 'raw', raw: JSON.stringify(extraFieldRequest) }\r",
+							"    }, function (err, res) {\r",
+							"        console.log(\"Extra field response:\", res.text());\r",
+							"        pm.expect(res.code).to.eql(200);\r",
+							"\r",
+							"        const responseJson = res.json();\r",
+							"        pm.expect(responseJson.id).to.be.a('number').above(0);\r",
+							"        pm.expect(responseJson.name).to.eql(\"Bob\");\r",
+							"        pm.expect(responseJson.category.name).to.eql(\"cat\");\r",
+							"        pm.expect(responseJson).to.not.have.property(\"color\");\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let prefix = pm.environment.get(\"prefix\") || \"Bobby_\"; // Optional: you can set prefix\r",
+							"let randomNumber = Math.floor(Math.random() * 100000);\r",
+							"let randomName = prefix + randomNumber;\r",
+							"\r",
+							"// Save the randomized name to environment\r",
+							"pm.environment.set(\"randomPetName\", randomName);\r",
+							"\r",
+							"let requestBody = {\r",
+							"  \"id\": 0,\r",
+							"  \"category\": {\r",
+							"    \"id\": 0,\r",
+							"    \"name\": randomName\r",
+							"  },\r",
+							"  \"name\": randomName,\r",
+							"  \"photoUrls\": [\r",
+							"    randomName\r",
+							"  ],\r",
+							"  \"tags\": [\r",
+							"    {\r",
+							"      \"id\": 0,\r",
+							"      \"name\": randomName\r",
+							"    }\r",
+							"  ],\r",
+							"  \"status\": \"available\"\r",
+							"}\r",
+							"\r",
+							"pm.request.body.raw = JSON.stringify(requestBody);  "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 0,\n  \"category\": {\n    \"id\": 0,\n    \"name\": \"string\"\n  },\n  \"name\": \"doggie\",\n  \"photoUrls\": [\n    \"string\"\n  ],\n  \"tags\": [\n    {\n      \"id\": 0,\n      \"name\": \"string\"\n    }\n  ],\n  \"status\": \"available\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPetID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Basic check: Is the API responding with 200 OK?\r",
+							"pm.test(\"Status should be 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body should contain the correct ID\", function () {\r",
+							"    const responseText = pm.response.text();\r",
+							"    console.log(\"The responseText is \", responseText);\r",
+							"    const petId_response = responseText.match(/\"id\":\\s*(\\d+)/);\r",
+							"    if (petId_response) {\r",
+							"        const petId = petId_response[1];  \r",
+							"        console.log(\"The petId_response in response is \", petId);\r",
+							"        pm.expect(petId).to.equal(pm.environment.get(\"petId\")); \r",
+							"    } else {\r",
+							"        pm.expect.fail(\"Pet ID not found in the response\");\r",
+							"    }\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Invalid Pet ID should return 404\", function () {\r",
+							"    const invalidPetId = 9999999; \r",
+							"    const url = `https://petstore.swagger.io/v2/pet/${invalidPetId}`;\r",
+							"    pm.sendRequest(url, function (err, res) {\r",
+							"        console.log(\"The response is\", res);\r",
+							"        pm.expect(res.code).to.eql(404);      \r",
+							"        pm.expect(res.status).to.eql('Not Found'); \r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/{{petId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{petId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
