@@ -74,7 +74,7 @@ In the package.json file, I've added the following scripts to run specific test 
 
 ✅ Test Case A and B involve full UI-driven automation for account creation and validation, dynamically generating user credentials in each test run.
 
-✅ For Test Case C, I implemented an API endpoint to create users, optimizing execution time and focusing on hands-on practice with API testing.
+✅ For Test Case C, I implemented an API endpoint to create users, optimizing execution time.
 
 ✅ All four test cases are included in one file for assessment clarity. In real-world scenarios, tests would be modularized into separate spec files.
 
