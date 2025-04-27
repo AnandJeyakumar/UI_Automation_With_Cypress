@@ -69,7 +69,7 @@ export class shippingDetailsPages{
 
     // Currently, this function is fixed to validate the prices of two products.
     // The 'productPrice' parameter should be provided as an array.
-    // In the future, we can refactor the code to make it more reusable by creating separate logic for the calculations.
+    // If needed in future, we can refactor the code to make it more reusable by creating separate logic for the calculations.
     validateOrderSummaryAmountDetails(productPrice,fixedAmount)
     {
         cy.log("Inside validateOrderSummaryAmountDetails");
@@ -100,11 +100,6 @@ export class shippingDetailsPages{
   });
 
 }
-
-    // getOrderNumber(){
-    //     return cy.get(this.webLocators.orderNumber)
-    // }
-    
 
 }
 
