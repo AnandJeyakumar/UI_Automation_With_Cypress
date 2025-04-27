@@ -11,18 +11,19 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: "https://magento.softwaretestingboard.com/",
     setupNodeEvents(on, config) {
-      require('cypress-mochawesome-reporter/plugin')(on); 
-      grep(config); 
-      return config; 
+      require('cypress-mochawesome-reporter/plugin')(on);
+      grep(config);
+      return config;
     },
   },
   env: {
     URL: "https://magento.softwaretestingboard.com/",
   },
   reporterOptions: {
-    reportDir: 'cypress/reports',
-    overwrite: false,
+    reportDir: 'runner-results',    // 👈 (use runner-results as per your latest settings)
+    overwrite: true,
     html: true,
-    json: true,
-  },
+    json: false,
+    inlineAssets: true              // 👈 (this will fix your blank report issue)
+  }
 });
