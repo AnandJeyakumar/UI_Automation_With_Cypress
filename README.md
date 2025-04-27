@@ -31,46 +31,54 @@ This project demonstrates end-to-end UI test automation using **Cypress** on the
 ## 🛠️ Setup Instructions
 
 1. **Clone this repo:**
-   git clone https://github.com/AnandJeyakumar/UI_Automation_With_Cypress.git
-   cd UI_Automation_With_Cypress
 
+         git clone https://github.com/AnandJeyakumar/UI_Automation_With_Cypress.git
+      - **Then, navigate into the project directory:**
+
+         	cd UI_Automation_With_Cypress
+   
 2. **Install dependencies:**
-   npm install
 
-3. **Run tests in headed mode:**
-   npx cypress open
+         npm install
 
-3. **Run tests in headless mode:**
-   npm run test
+3. **To Run tests in headed mode: (Interactive UI mode):**
+
+         npx cypress open
+
+3. **To Run tests in headless mode: (Faster, no UI):**
+
+         npm run test
 
 4. **For Report Generation:**
-   npm install cypress-mochawesome-reporter --save-dev
+   
+         npm install cypress-mochawesome-reporter --save-dev
 
-5. **Install Grep for Grouping:**
-   npm install -D cypress-grep
-   Update your cypress.config.js
+5. **Optional: Install Grep for Grouping (If you want to run tagged tests):**
+   
+         npm install -D cypress-grep
 
-const grep = require('cypress-grep/src/plugin');
-Add this inside setupNodeEvents:
+      - **Update your cypress.config.js**
 
-setupNodeEvents(on, config) {
-  require('cypress-mochawesome-reporter/plugin')(on);
-  require('cypress-grep/src/plugin')(config);   
-  return config;
-}
+            const grep = require('cypress-grep/src/plugin');
+            Add this inside setupNodeEvents:
 
+            setupNodeEvents(on, config) {
+            require('cypress-mochawesome-reporter/plugin')(on);
+            require('cypress-grep/src/plugin')(config);   
+            return config;
+            }
 
-Updated Scripts Section in package.json
+6. **Optional: To run a specific test case (e.g., TestCase_A) using --grep filter:**
+               
+         npm run cy:testA
 
-In the package.json file, I've added the following scripts to run specific test cases using --grep to filter the tests by their names:
+      - **As i've updated the package.json to run specific tests**
 
-    "scripts": {
-    "cy:testA": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_A",
-    "cy:testB": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_B",
-    "cy:testC": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_C",
-    "cy:testD": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_D"
-    }
-    
+            "cy:testA": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_A",
+            "cy:testB": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_B",
+            "cy:testC": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_C",
+            "cy:testD": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_D"
+
 
 📌 Notes
 
