@@ -5,7 +5,7 @@ module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
   defaultCommandTimeout: 6000,
   retries: {
-    runMode: 1,
+    runMode: 2,
     openMode: 2
   },
   e2e: {
