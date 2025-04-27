@@ -51,10 +51,6 @@ export class shippingDetailsPages{
         cy.get(this.webLocators.phoneNumber).type(phoneNumber)
     }
 
-    waitTillTheLoaderDisappear() {
-        cy.get(this.webLocators.loader).should(Commands.NOT_BE_VISIBLE);
-    }
-
     expandOrderSummmary(){
         cy.get(this.webLocators.itemsInCart).click()
     }

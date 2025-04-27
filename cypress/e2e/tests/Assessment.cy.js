@@ -53,8 +53,8 @@ describe("Assessment",()=>{
         cy.navigateToCartAndEnterAddress()
         shippingDetailsPagesObj.expandOrderSummmary();
         shippingDetailsPagesObj.verifyProductInOrderSummary(testData.productsToAdd,testData.productsPrices)
-        shippingDetailsPagesObj.waitTillTheLoaderDisappear();
         cy.getElementByButtonText(testData.buttonsText.next).click()
+        cy.waitTillTheLoaderDisappear()
         shippingDetailsPagesObj.validateOrderSummaryAmountDetails(testData.productsPrices,testData.fixedPrice)
         cy.getElementByButtonText(testData.buttonsText.placeOrder).click()
         shippingDetailsPagesObj.getOrderSuccessfullMessage().should(Commands.CONTAIN,testData.messages.orderPlacedSuccessMessage)
@@ -76,7 +76,7 @@ describe("Assessment",()=>{
         myWishListPageObj.getCartItemNumber().should(Commands.HAVE_TEXT,testData.wishListProduct.length)
         cy.navigateToCartAndEnterAddress()
         shippingDetailsPagesObj.expandOrderSummmary();
-        shippingDetailsPagesObj.waitTillTheLoaderDisappear();
+        cy.waitTillTheLoaderDisappear()
         cy.getElementByButtonText(testData.buttonsText.next).click()
         cy.getElementByButtonText(testData.buttonsText.placeOrder).click()
         shippingDetailsPagesObj.getOrderSuccessfullMessage().should(Commands.CONTAIN,testData.messages.orderPlacedSuccessMessage)

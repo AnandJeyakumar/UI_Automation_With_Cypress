@@ -2,7 +2,7 @@ import testData from '../../cypress/fixtures/testData.json';
 import { createAccountPage } from "../../cypress/pages/createAccountPage";
 import { shippingDetailsPages } from "../../cypress/pages/shippingDetailsPages";
 import { productsPage } from "../../cypress/pages/productsPage";
-import { Commands } from '../../cypress/support/enum';
+import { Commands, WaitTimes } from '../../cypress/support/enum';
 
 
 const createAccountPageObj = new createAccountPage();
@@ -19,6 +19,7 @@ Cypress.Commands.add('createNewUser', (firstName, lastName, email, password) => 
 });
 
 Cypress.Commands.add('enterAddress', () => {
+    cy.waitTillTheLoaderDisappear()
     shippingDetailsPagesObj.enterStreet(testData.address.streetAdress);
     shippingDetailsPagesObj.enterCity(testData.address.city);
     shippingDetailsPagesObj.selectState(testData.address.state);
@@ -78,6 +79,19 @@ Cypress.Commands.add('navigateToCartAndEnterAddress', (text) => {
     console.log("Inside navigateToCartAndEnterAddress");
     productsPageObj.clickOnShowCartIcon();
     productsPageObj.clickOnProceedToCheckout();
-    cy.waitForFullLoad()
     cy.enterAddress()
+    cy.wait(WaitTimes.WAIT_2_SECONDS)
+    cy.waitTillTheLoaderDisappear()
+});
+
+Cypress.Commands.add('waitTillTheLoaderDisappear', (text) => {
+    console.log("Inside waitTillTheLoaderDisappear Commads");
+    cy.get('body').then(($body) => {
+        if ($body.find(shippingDetailsPagesObj.webLocators.loader).length > 0) {
+            cy.log('Loader  found, inside if...');
+            cy.get(shippingDetailsPagesObj.webLocators.loader, { timeout: WaitTimes.WAIT_10_SECONDS }).should(Commands.NOT_BE_VISIBLE);
+        } else {
+            cy.log('Loader not found, proceeding...');
+        }
+    });
 });
