@@ -31,8 +31,8 @@ This project demonstrates end-to-end UI test automation using **Cypress** on the
 ## 🛠️ Setup Instructions
 
 1. **Clone this repo:**
-   git clone https://github.com/your-username/project-name.git
-   cd project-name
+   git clone https://github.com/AnandJeyakumar/UI_Automation_With_Cypress.git
+   cd UI_Automation_With_Cypress
 
 2. **Install dependencies:**
    npm install
@@ -48,8 +48,9 @@ This project demonstrates end-to-end UI test automation using **Cypress** on the
 
 5. **Install Grep for Grouping:**
    npm install -D cypress-grep
-   2. Update your cypress.config.js
+   Update your cypress.config.js
 
+const grep = require('cypress-grep/src/plugin');
 Add this inside setupNodeEvents:
 
 setupNodeEvents(on, config) {
