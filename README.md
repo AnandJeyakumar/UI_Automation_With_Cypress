@@ -69,6 +69,7 @@ In the package.json file, I've added the following scripts to run specific test 
     "cy:testC": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_C",
     "cy:testD": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_D"
     }
+    
 
 📌 Notes
 
@@ -92,6 +93,25 @@ In the package.json file, I've added the following scripts to run specific test 
 ✅ There is no need for manual setup or configuration of keys; everything is handled within the automation itself.
 
 ✅ Simply run the tests, and the necessary user accounts will be created automatically.
+
+
+## Folder Structure for Assessment 2,3 and 4
+
+**manual-testcases/**: Contains the Assessment_Manual_TestCases.xlsx file, listing all the manual test cases for this project.
+
+**postman-collection/**: Includes the assessment.postman_collection.json file, which you can import into Postman to execute the API tests.
+
+**performance-test-plan/**: Includes the Performance_Testing_Strategy_for_Magento_Website_README.md file, outlining the performance testing strategy for the Magento website.
+
+🛠️ How to Use
+
+**Manual Tests**:
+Open the Assessment_Manual_TestCases.xlsx file in Excel or any compatible viewer to review the manual test cases.
+
+**Postman Collection**:
+Import the assessment.postman_collection.json file into Postman to run the API tests.
+
+
 
 📬 Contact
 For questions or feedback, feel free to reach out to:
