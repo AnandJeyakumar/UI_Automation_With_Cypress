@@ -93,7 +93,6 @@ In the package.json file, I've added the following scripts to run specific test 
 
 ✅ Simply run the tests, and the necessary user accounts will be created automatically.
 
-
 📬 Contact
 For questions or feedback, feel free to reach out to:
 anandjeyakumar7@gmail.com
