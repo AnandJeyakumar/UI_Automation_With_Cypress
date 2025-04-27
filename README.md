@@ -87,6 +87,12 @@ In the package.json file, I've added the following scripts to run specific test 
 
 ✅ I used an enum.js to avoid hardcoding command strings directly inside the tests. It improves reusability and avoids typos, following clean code practices.
 
+✅ This project dynamically handles user account creation during test execution. As a result, no external API keys, authentication tokens, or other sensitive credentials are required for the tests.
+
+✅ There is no need for manual setup or configuration of keys; everything is handled within the automation itself.
+
+✅ Simply run the tests, and the necessary user accounts will be created automatically.
+
 
 📬 Contact
 For questions or feedback, feel free to reach out to:
