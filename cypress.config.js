@@ -1,5 +1,5 @@
 const { defineConfig } = require("cypress");
-const grep = require('cypress-grep/src/plugin'); // 👈 Correct import
+const grep = require('cypress-grep/src/plugin');
 
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
@@ -11,9 +11,9 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: "https://magento.softwaretestingboard.com/",
     setupNodeEvents(on, config) {
-      require('cypress-mochawesome-reporter/plugin')(on); // 👈 Set up reporter
-      grep(config); // 👈 Set up grep filter
-      return config; // 👈 Return config after setup
+      require('cypress-mochawesome-reporter/plugin')(on); 
+      grep(config); 
+      return config; 
     },
   },
   env: {
