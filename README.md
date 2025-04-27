@@ -57,17 +57,6 @@ This project demonstrates end-to-end UI test automation using **Cypress** on the
    
          npm install -D cypress-grep
 
-      - **Update your cypress.config.js**
-
-            const grep = require('cypress-grep/src/plugin');
-            Add this inside setupNodeEvents:
-
-            setupNodeEvents(on, config) {
-            require('cypress-mochawesome-reporter/plugin')(on);
-            require('cypress-grep/src/plugin')(config);   
-            return config;
-            }
-
 6. **Optional: To run a specific test case (e.g., TestCase_A) using --grep filter:**
                
          npm run cy:testA
