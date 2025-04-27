@@ -7,7 +7,8 @@ export const Commands = {
     CONTAIN: 'contain',
     IS_VISIBLE: 'is.visible',
     NOT_BE_VISIBLE:'not.be.visible',
-    EXIST:'exist'
+    EXIST:'exist',
+    HAVE_LENGTH:"have.length"
   };
 
 export const WaitTimes = {

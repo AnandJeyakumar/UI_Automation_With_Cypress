@@ -1,9 +1,14 @@
 import testData from '../../cypress/fixtures/testData.json';
 import { createAccountPage } from "../../cypress/pages/createAccountPage";
 import { shippingDetailsPages } from "../../cypress/pages/shippingDetailsPages";
+import { productsPage } from "../../cypress/pages/productsPage";
+import { Commands } from '../../cypress/support/enum';
+
 
 const createAccountPageObj = new createAccountPage();
 const shippingDetailsPagesObj = new shippingDetailsPages();
+const productsPageObj = new productsPage();
+
 
 Cypress.Commands.add('createNewUser', (firstName, lastName, email, password) => {
     createAccountPageObj.enterFirstName(firstName);
@@ -26,10 +31,10 @@ Cypress.Commands.add('enterAddress', () => {
 // first param - element, second param = array of text to verify
 Cypress.Commands.add('verifyMultipleElementsAndText', (element, arrayText) => {
     cy.get(element)
-        .should('have.length', arrayText.length)
+        .should(Commands.HAVE_LENGTH, arrayText.length)
         .each(($el, index) => {
             cy.wrap($el)
-                .should('have.text', arrayText[index].trim());
+                .should(Commands.HAVE_TEXT, arrayText[index].trim());
         });
 });
 
@@ -52,14 +57,27 @@ Cypress.Commands.add('waitForFullLoad', () => {
 Cypress.Commands.add('mouseHowerAndClickInsideElement', (hoverElement, product, insideElementToClick) => {
     cy.contains(hoverElement, product)
         .scrollIntoView()
-        .should('be.visible')
+        .should(Commands.BE_VISIBLE)
         .realHover()
         .find(insideElementToClick)
-        .should('exist')
+        .should(Commands.EXIST)
         .click({ force: true });
 });
 
 Cypress.Commands.add('getElementByButtonText', (text) => {
     console.log("Inside getElementByButtonText");
     return cy.contains('button', text);
+});
+
+Cypress.Commands.add('getElementByLinkText', (text) => {
+    console.log("Inside getElementByButtonText");
+    return cy.contains('a', text);
+});
+
+Cypress.Commands.add('navigateToCartAndEnterAddress', (text) => {
+    console.log("Inside navigateToCartAndEnterAddress");
+    productsPageObj.clickOnShowCartIcon();
+    productsPageObj.clickOnProceedToCheckout();
+    cy.waitForFullLoad()
+    cy.enterAddress()
 });

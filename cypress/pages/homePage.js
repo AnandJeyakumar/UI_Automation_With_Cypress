@@ -11,7 +11,7 @@ export class homePage {
     }
 
     navigateToUrlEndPoint(endPoint) {
-        cy.visit(Cypress.env('URL') + "gear/bags.html");
+        cy.visit(Cypress.env('URL') + endPoint);
     }
 
     clickOnLink(LinkText) {

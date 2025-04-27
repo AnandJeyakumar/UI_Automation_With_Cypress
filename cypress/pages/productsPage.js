@@ -8,7 +8,9 @@ export class productsPage {
         wishList: ".towishlist",
         addToCart: "button.primary[title='Add to Cart']",
         productItems: ".product-item",
-        productNames: '.product-item-info'
+        productNames: '.product-item-info',
+        header:".base",
+        copyrightElement:".copyright > span"
     };
 
     clickOnProceedToCheckout() {
@@ -17,12 +19,8 @@ export class productsPage {
     }
 
     clickOnShowCartIcon() {
-        cy.wait(2000);
+        cy.wait(WaitTimes.WAIT_2_SECONDS);
         cy.get(this.webLocators.showCart).click({ force: true });
-    }
-
-    addtoCart() {
-        return cy.contains('button', "Add to Cart");
     }
 
     getProduct(productName) {
@@ -33,14 +31,14 @@ export class productsPage {
         return cy.get(this.webLocators.productAddedMessage);
     }
 
-    verifySubMenuBags() {
-        cy.get(".base").should(Commands.HAVE_TEXT, 'Bags');
+    verifySubMenuBags(text) {
+        cy.get(this.webLocators.header).should(Commands.HAVE_TEXT, text);
     }
 
     addToCart(products) {
         cy.log("Inside Products Loop");
         cy.waitForFullLoad();
-        cy.get('.copyright > span').should(Commands.BE_VISIBLE);
+        cy.get(this.webLocators.copyrightElement).should(Commands.BE_VISIBLE);
 
         products.forEach(product => {
             cy.log(`Adding product: ${product}`);

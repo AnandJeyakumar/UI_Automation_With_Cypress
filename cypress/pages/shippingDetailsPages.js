@@ -67,40 +67,43 @@ export class shippingDetailsPages{
         cy.verifyMultipleElementsAndText(this.webLocators.orderSummmaryProductPrice,productPrice)
     }
 
+    // Currently, this function is fixed to validate the prices of two products.
+    // The 'productPrice' parameter should be provided as an array.
+    // In the future, we can refactor the code to make it more reusable by creating separate logic for the calculations.
     validateOrderSummaryAmountDetails(productPrice,fixedAmount)
     {
         cy.log("Inside validateOrderSummaryAmountDetails");
-    const price1 = productPrice[0].replace('$', '').trim(); 
-    const price2 = productPrice[1].replace('$', '').trim(); 
-    const price1Number = parseFloat(price1);
-    const price2Number = parseFloat(price2);
-    const sum = price1Number + price2Number;
-    cy.log("Calculated sum:", sum);
+        const price1 = productPrice[0].replace('$', '').trim(); 
+        const price2 = productPrice[1].replace('$', '').trim(); 
+        const price1Number = parseFloat(price1);
+        const price2Number = parseFloat(price2);
+        const sum = price1Number + price2Number;
+        cy.log("Calculated sum:", sum);
 
-    const fixedPrice = fixedAmount[0].replace('$', '').trim();
-    const fixedPriceNumber = parseFloat(fixedPrice); // Convert to number
-    const newPriceArray = [sum, fixedPriceNumber];
-    const sumWithDollar = `$${sum.toFixed(2)}`
-    cy.get(this.webLocators.subTotal).should(Commands.HAVE_TEXT,sumWithDollar)
-    cy.get(this.webLocators.shippingAmount).should(Commands.HAVE_TEXT,fixedAmount[0])
-    let totalAmount = 0;
-    for (let i of newPriceArray) {
-        totalAmount += i; 
-    }
-    const totalWithDollar = `$${totalAmount.toFixed(2)}`;
-    cy.log("The Total Amount is", totalWithDollar);
-    cy.get(this.webLocators.orderTotal)
-    .invoke('text')
-    .then((actualText) => {
-    expect(actualText.trim()).to.eq(totalWithDollar);
+        const fixedPrice = fixedAmount[0].replace('$', '').trim();
+        const fixedPriceNumber = parseFloat(fixedPrice); 
+        const newPriceArray = [sum, fixedPriceNumber];
+        const sumWithDollar = `$${sum.toFixed(2)}`
+        cy.get(this.webLocators.subTotal).should(Commands.HAVE_TEXT,sumWithDollar)
+        cy.get(this.webLocators.shippingAmount).should(Commands.HAVE_TEXT,fixedAmount[0])
+        let totalAmount = 0;
+        for (let i of newPriceArray) {
+            totalAmount += i; 
+        }
+        const totalWithDollar = `$${totalAmount.toFixed(2)}`;
+        cy.log("The Total Amount is", totalWithDollar);
+        cy.get(this.webLocators.orderTotal)
+        .invoke('text')
+        .then((actualText) => {
+        expect(actualText.trim()).to.eq(totalWithDollar);
     
   });
 
 }
 
-    getOrderNumber(){
-        return cy.get(this.webLocators.orderNumber)
-    }
+    // getOrderNumber(){
+    //     return cy.get(this.webLocators.orderNumber)
+    // }
     
 
 }

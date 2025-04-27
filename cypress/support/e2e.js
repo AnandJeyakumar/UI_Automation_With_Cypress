@@ -1,7 +1,7 @@
 import './commands'
 import 'cypress-mochawesome-reporter/register';
 import 'cypress-real-events/support';
-
+require('cypress-grep')();
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     // Ignore the known 'clone' error in Magento's frontend

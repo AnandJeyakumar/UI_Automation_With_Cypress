@@ -27,10 +27,6 @@ export class myAccountPage {
         cy.get(this.webLocators.actionSwitch).click();
     }
 
-    clickOnTextLink(textToSelect) {
-        cy.contains('a', textToSelect).click();
-    }
-
     getSignOut() {
         return cy.get(this.webLocators.signOut);
     }
@@ -39,12 +35,8 @@ export class myAccountPage {
         return cy.contains(this.webLocators.menuItems, text);
     }
 
-    getSubMenuItems(subMenuItem) {
-        return cy.contains('a', subMenuItem);
-    }
-
     mouseOverAndClickSubMenu(text, subMenuItem) {
         this.getMenuItems(text).should(Commands.BE_VISIBLE).trigger('mouseover');
-        this.getSubMenuItems(subMenuItem).should(Commands.BE_VISIBLE).click();
+        cy.getElementByLinkText(subMenuItem).should(Commands.BE_VISIBLE).click();
     }
 }

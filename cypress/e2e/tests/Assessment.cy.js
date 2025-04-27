@@ -1,9 +1,7 @@
 import testData from '../../fixtures/testData.json'
 import { generateRandomUser } from "../../support/dataUtils";
 import { registerUser } from "../../support/apiUtils";
-import { beforeEach } from "mocha"
 import { pageManager } from '../../support/pageManager';
-require('cypress-grep')();
 import { Commands } from '../../support/enum';
 
 
@@ -35,7 +33,7 @@ describe("Assessment",()=>{
         myAccountPageObj.getWelcomeText().should(Commands.CONTAIN,user.firstName).and(Commands.CONTAIN,user.lastName)
         myAccountPageObj.getContactInformation().should(Commands.CONTAIN,user.email)
         myAccountPageObj.clickOnActionDropdown()
-        myAccountPageObj.clickOnTextLink(testData.buttonsText.signOut)
+        cy.getElementByLinkText(testData.buttonsText.signOut).click()
         myAccountPageObj.getSignOut().should(Commands.HAVE_TEXT,testData.messages.signedOutMessage)
         homePageObj.clickOnLink(testData.buttonsText.signIn)
         loginPageObj.enterEmail(user.email)
@@ -49,13 +47,10 @@ describe("Assessment",()=>{
         homePageObj.clickOnLink('Create an Account')
         cy.createNewUser(user.firstName, user.lastName, user.email, user.password);
         myAccountPageObj.getRegisterMessage().should(Commands.CONTAIN, testData.messages.registeredSuccessMessage);
-        myAccountPageObj.mouseOverAndClickSubMenu("Gear", "Bags");
-        productsPageObj.verifySubMenuBags();
+        myAccountPageObj.mouseOverAndClickSubMenu(testData.menuItem.gearMenu, testData.menuItem.subMenuItem.Bags);
+        productsPageObj.verifySubMenuBags(testData.menuItem.subMenuItem.Bags);
         productsPageObj.addToCart(testData.productsToAdd);
-        productsPageObj.clickOnShowCartIcon();
-        productsPageObj.clickOnProceedToCheckout();
-        cy.waitForFullLoad()
-        cy.enterAddress()
+        cy.navigateToCartAndEnterAddress()
         shippingDetailsPagesObj.expandOrderSummmary();
         shippingDetailsPagesObj.verifyProductInOrderSummary(testData.productsToAdd,testData.productsPrices)
         shippingDetailsPagesObj.waitTillTheLoaderDisappear();
@@ -74,15 +69,12 @@ describe("Assessment",()=>{
             cy.log("The user email registered through API is ", user.email);
             cy.log("The password registered through API is ", user.password);
         });
-        homePageObj.navigateToUrlEndPoint("gear/bags.html")
+        homePageObj.navigateToUrlEndPoint(testData.bagsPageURLEndPoint)
         productsPageObj.addToWishList(testData.wishListProduct)
         myWishListPageObj.addToCart(testData.wishListProduct)
         myWishListPageObj.getWishListEmptyMessage(testData.messages.emptyItemsInWishList)
         myWishListPageObj.getCartItemNumber().should(Commands.HAVE_TEXT,testData.wishListProduct.length)
-        productsPageObj.clickOnShowCartIcon();
-        productsPageObj.clickOnProceedToCheckout();
-        cy.waitForFullLoad()
-        cy.enterAddress()
+        cy.navigateToCartAndEnterAddress()
         shippingDetailsPagesObj.expandOrderSummmary();
         shippingDetailsPagesObj.waitTillTheLoaderDisappear();
         cy.getElementByButtonText(testData.buttonsText.next).click()
@@ -91,11 +83,9 @@ describe("Assessment",()=>{
     })
 
     it("TestCase_D - Search and validate results",()=>{
-        homePageObj.navigateToUrlEndPoint("gear/bags.html")
+        homePageObj.navigateToUrlEndPoint(testData.bagsPageURLEndPoint)
         homePageObj.enterSearchItem(testData.productToSearch)
-        homePageObj.getSearchResult()
-        .filter((index,el) => el.innerText.trim() === testData.productToSearch)
-        .click();
+        homePageObj.getSearchResult().filter((index,el) => el.innerText.trim() === testData.productToSearch).click();
         homePageObj.getHeader().should(Commands.CONTAIN_TEXT,testData.productToSearch)
         productsPageObj.getProduct(testData.productToSearch).should(Commands.BE_VISIBLE).and(Commands.CONTAIN_TEXT,testData.productToSearch)
     })
