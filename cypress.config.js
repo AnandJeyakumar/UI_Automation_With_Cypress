@@ -20,10 +20,10 @@ module.exports = defineConfig({
     URL: "https://magento.softwaretestingboard.com/",
   },
   reporterOptions: {
-    reportDir: 'runner-results',    // 👈 (use runner-results as per your latest settings)
+    reportDir: 'runner-results',    
     overwrite: true,
     html: true,
     json: false,
-    inlineAssets: true              // 👈 (this will fix your blank report issue)
+    inlineAssets: true              
   }
 });
