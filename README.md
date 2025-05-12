@@ -1,4 +1,4 @@
-# Cypress UI Automation Assessment
+# Cypress UI Automation 
 
 This project demonstrates end-to-end UI test automation using **Cypress** on the Magento demo website:  
 🔗 [https://magento.softwaretestingboard.com/](https://magento.softwaretestingboard.com/)
@@ -63,10 +63,10 @@ This project demonstrates end-to-end UI test automation using **Cypress** on the
 
       - **As i've updated the package.json to run specific tests**
 
-            "cy:testA": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_A",
-            "cy:testB": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_B",
-            "cy:testC": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_C",
-            "cy:testD": "npx cypress run --spec 'cypress/e2e/tests/Assessment.cy.js' --env grep=TestCase_D"
+            "cy:testA": "npx cypress run --spec 'cypress/e2e/tests/testCaseFile1.cy.js' --env grep=TestCase_A",
+            "cy:testB": "npx cypress run --spec 'cypress/e2e/tests/testCaseFile1.cy.js' --env grep=TestCase_B",
+            "cy:testC": "npx cypress run --spec 'cypress/e2e/tests/testCaseFile1.cy.js' --env grep=TestCase_C",
+            "cy:testD": "npx cypress run --spec 'cypress/e2e/tests/testCaseFile1.cy.js' --env grep=TestCase_D"
 
 
 📌 Notes
@@ -75,7 +75,7 @@ This project demonstrates end-to-end UI test automation using **Cypress** on the
 
 ✅ For Test Case C, I implemented an API endpoint to create users, optimizing execution time.
 
-✅ All four test cases are included in one file for assessment clarity. In real-world scenarios, tests would be modularized into separate spec files.
+✅ All four test cases are included in one file for clarity. In real-world scenarios, tests would be modularized into separate spec files.
 
 ✅ Test data, including user credentials, is dynamically generated using random values in the test code itself.
 
@@ -93,11 +93,11 @@ This project demonstrates end-to-end UI test automation using **Cypress** on the
 ✅ Simply run the tests, and the necessary user accounts will be created automatically.
 
 
-## Folder Structure for Assessment 2,3 and 4
+## Folder Structure for Manual Test cases , PostMan Collection and Performance Test Plan
 
-**manual-testcases/**: Contains the Assessment_Manual_TestCases.xlsx file, listing 5 test cases.
+**manual-testcases/**: Contains the Manual_TestCases.xlsx file, listing 5 test cases.
 
-**postman-collection/**: Includes the assessment.postman_collection.json file, which you can import into Postman to execute the API tests.
+**postman-collection/**: Includes the postman_collection.json file, which you can import into Postman to execute the API tests.
 
 **performance-test-plan/**: Includes the Performance_Testing_Strategy_for_Magento_Website_README.md file, outlining the performance testing strategy for the Magento website.
 
