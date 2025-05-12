@@ -15,7 +15,7 @@ const shippingDetailsPagesObj = poManager .getShippingDetailsPages()
 const myWishListPageObj = poManager .getMyWishListPage()
 
 
-describe("Assessment",()=>{
+describe("Hands On Cypress Test cases",()=>{
     let user;
     beforeEach(() => {
         user = generateRandomUser(testData.createAccountData);
