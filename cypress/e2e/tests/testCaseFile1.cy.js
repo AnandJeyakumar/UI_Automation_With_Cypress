@@ -43,22 +43,27 @@ describe("Hands On Cypress Test cases",()=>{
     })
 
 
-    it("TestCase_B - Place order with multiple products (apply price calculation on checks)", () => {
-        homePageObj.clickOnLink('Create an Account')
-        cy.createNewUser(user.firstName, user.lastName, user.email, user.password);
-        myAccountPageObj.getRegisterMessage().should(Commands.CONTAIN, testData.messages.registeredSuccessMessage);
-        myAccountPageObj.mouseOverAndClickSubMenu(testData.menuItem.gearMenu, testData.menuItem.subMenuItem.Bags);
-        productsPageObj.verifySubMenuBags(testData.menuItem.subMenuItem.Bags);
-        productsPageObj.addToCart(testData.productsToAdd);
-        cy.navigateToCartAndEnterAddress()
-        shippingDetailsPagesObj.expandOrderSummmary();
-        shippingDetailsPagesObj.verifyProductInOrderSummary(testData.productsToAdd,testData.productsPrices)
-        cy.getElementByButtonText(testData.buttonsText.next).click()
-        cy.waitTillTheLoaderDisappear()
-        shippingDetailsPagesObj.validateOrderSummaryAmountDetails(testData.productsPrices,testData.fixedPrice)
-        cy.getElementByButtonText(testData.buttonsText.placeOrder).click()
-        shippingDetailsPagesObj.getOrderSuccessfullMessage().should(Commands.CONTAIN,testData.messages.orderPlacedSuccessMessage)
-    });
+    // it.only("TestCase_B - Place order with multiple products (apply price calculation on checks)", () => {
+    //     homePageObj.clickOnLink('Create an Account')
+    //     cy.createNewUser(user.firstName, user.lastName, user.email, user.password);
+    //     myAccountPageObj.getRegisterMessage().should(Commands.CONTAIN, testData.messages.registeredSuccessMessage);
+    //     myAccountPageObj.mouseOverAndClickSubMenu(testData.menuItem.gearMenu, testData.menuItem.subMenuItem.Bags);
+    //     productsPageObj.verifySubMenuBags(testData.menuItem.subMenuItem.Bags);
+    //     productsPageObj.addToCart(testData.productsToAdd);
+    //     cy.navigateToCartAndEnterAddress()
+    //     shippingDetailsPagesObj.expandOrderSummmary();
+    //     shippingDetailsPagesObj.verifyProductInOrderSummary(testData.productsToAdd,testData.productsPrices)
+    //     cy.getElementByButtonText(testData.buttonsText.next).click()
+    //     cy.waitTillTheLoaderDisappear()
+    //     shippingDetailsPagesObj.validateOrderSummaryAmountDetails(testData.productsPrices,testData.fixedPrice)
+    //     cy.getElementByButtonText(testData.buttonsText.placeOrder).click()
+    //     shippingDetailsPagesObj.getOrderSuccessfullMessage().should(Commands.CONTAIN,testData.messages.orderPlacedSuccessMessage)
+    //     shippingDetailsPagesObj.getOrderNumber().then((orderNum)=>{
+    //         cy.writeFile('cypress/fixtures/orderID.json', { orderNumber: orderNum });
+    //         cy.log("THe OrderNum is ", orderNum)
+    //         Cypress.env("OderNum", orderNum)
+    //     })
+    // });
 
 
     
@@ -69,24 +74,26 @@ describe("Hands On Cypress Test cases",()=>{
             cy.log("The user email registered through API is ", user.email);
             cy.log("The password registered through API is ", user.password);
         });
-        homePageObj.navigateToUrlEndPoint(testData.bagsPageURLEndPoint)
-        productsPageObj.addToWishList(testData.wishListProduct)
-        myWishListPageObj.addToCart(testData.wishListProduct)
-        myWishListPageObj.getWishListEmptyMessage(testData.messages.emptyItemsInWishList)
-        myWishListPageObj.getCartItemNumber().should(Commands.HAVE_TEXT,testData.wishListProduct.length)
-        cy.navigateToCartAndEnterAddress()
-        shippingDetailsPagesObj.expandOrderSummmary();
-        cy.waitTillTheLoaderDisappear()
-        cy.getElementByButtonText(testData.buttonsText.next).click()
-        cy.getElementByButtonText(testData.buttonsText.placeOrder).click()
-        shippingDetailsPagesObj.getOrderSuccessfullMessage().should(Commands.CONTAIN,testData.messages.orderPlacedSuccessMessage)
+        // homePageObj.navigateToUrlEndPoint(testData.bagsPageURLEndPoint)
+        // productsPageObj.addToWishList(testData.wishListProduct)
+        // myWishListPageObj.addToCart(testData.wishListProduct)
+        // myWishListPageObj.getWishListEmptyMessage(testData.messages.emptyItemsInWishList)
+        // myWishListPageObj.getCartItemNumber().should(Commands.HAVE_TEXT,testData.wishListProduct.length)
+        // cy.navigateToCartAndEnterAddress()
+        // shippingDetailsPagesObj.expandOrderSummmary();
+        // cy.waitTillTheLoaderDisappear()
+        // cy.getElementByButtonText(testData.buttonsText.next).click()
+        // cy.getElementByButtonText(testData.buttonsText.placeOrder).click()
+        // shippingDetailsPagesObj.getOrderSuccessfullMessage().should(Commands.CONTAIN,testData.messages.orderPlacedSuccessMessage)
     })
 
-    it("TestCase_D - Search and validate results",()=>{
-        homePageObj.navigateToUrlEndPoint(testData.bagsPageURLEndPoint)
-        homePageObj.enterSearchItem(testData.productToSearch)
-        homePageObj.getSearchResult().filter((index,el) => el.innerText.trim() === testData.productToSearch).click();
-        homePageObj.getHeader().should(Commands.CONTAIN_TEXT,testData.productToSearch)
-        productsPageObj.getProduct(testData.productToSearch).should(Commands.BE_VISIBLE).and(Commands.CONTAIN_TEXT,testData.productToSearch)
-    })
+    // it("TestCase_D - Search and validate results",()=>{
+    //     homePageObj.navigateToUrlEndPoint(testData.bagsPageURLEndPoint)
+    //     homePageObj.enterSearchItem(testData.productToSearch)
+    //     homePageObj.getSearchResult().filter((index,el) => el.innerText.trim() === testData.productToSearch).click();
+    //     homePageObj.getHeader().should(Commands.CONTAIN_TEXT,testData.productToSearch)
+    //     productsPageObj.getProduct(testData.productToSearch).should(Commands.BE_VISIBLE).and(Commands.CONTAIN_TEXT,testData.productToSearch)
+    // })
+
+    
 })

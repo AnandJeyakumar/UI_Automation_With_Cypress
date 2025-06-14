@@ -1,0 +1,32 @@
+name: Cypress Parallel Tests (No Dashboard)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+            shardIndex: [0, 1, 2]
+            shardTotal: [3]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Cypress tests (shard)
+        run: |
+          echo "Running shard ${{ matrix.shardIndex }} of ${{ matrix.shardTotal }}"
+          npx cypress run --spec "$(npx cypress-split --ci-build-id $GITHUB_RUN_ID --shard-index ${{ matrix.shardIndex }} --shard-total ${{ matrix.shardTotal }})"

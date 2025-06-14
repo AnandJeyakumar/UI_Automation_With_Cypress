@@ -5,22 +5,29 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cypress run",
+    "test:parallel": "npx cypress-parallel -t 2 --glob \"cypress/e2e/tests/*.cy.js\" \"cypress run\"",
     "cy:testA": "npx cypress run --spec 'cypress/e2e/tests/testCaseFile1.cy.js' --env grep=TestCase_A",
     "cy:testB": "npx cypress run --spec 'cypress/e2e/tests/testCaseFile1.cy.js' --env grep=TestCase_B",
     "cy:testC": "npx cypress run --spec 'cypress/e2e/tests/testCaseFile1.cy.js' --env grep=TestCase_C",
-    "cy:testD": "npx cypress run --spec 'cypress/e2e/tests/testCaseFile1.cy.js' --env grep=TestCase_D"
+    "cy:testD": "npx cypress run --spec 'cypress/e2e/tests/testCaseFile1.cy.js' --env grep=TestCase_D",
+    "pretest": "rm -rf cypress/logs",
+    "test:multi": "npx cypress run --browser chrome --headed && npx cypress run --browser firefox && npx cypress run --browser edge",
+    "test:split:3": "npx cypress run --spec $(npx cypress-split --ci-build-id local --shard-index 0 --shard-total 3)"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cypress": "^14.3.2",
-    "cypress-parallel": "^0.15.0",
     "cypress-real-events": "^1.14.0"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^10.0.3",
     "chai": "^5.2.0",
+    "cypress-failed-log": "^2.10.0",
     "cypress-grep": "^3.0.4",
     "cypress-mochawesome-reporter": "^3.8.2",
+    "cypress-parallel": "^0.15.0",
+    "cypress-split": "^1.24.18",
     "mocha": "^11.1.0"
   }
 }

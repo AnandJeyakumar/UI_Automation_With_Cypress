@@ -2,6 +2,7 @@ const { defineConfig } = require("cypress");
 const grep = require('cypress-grep/src/plugin');
 
 module.exports = defineConfig({
+  practiceSite: "https://rahulshettyacademy.com/AutomationPractice/ ",
   reporter: 'cypress-mochawesome-reporter',
   defaultCommandTimeout: 6000,
   retries: {
@@ -12,6 +13,7 @@ module.exports = defineConfig({
     baseUrl: "https://magento.softwaretestingboard.com/",
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
+      require('cypress-failed-log/on')(on);
       grep(config);
       return config;
     },

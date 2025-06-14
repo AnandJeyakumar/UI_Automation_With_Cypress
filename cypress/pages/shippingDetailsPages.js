@@ -22,6 +22,13 @@ export class shippingDetailsPages{
         orderNumber:".order-number > strong"
     }
 
+    getOrderNumber()
+    {
+    return cy.get(this.webLocators.orderNumber).then(($ele)=>{
+        return $ele.text()
+    })
+    }
+
     getOrderSuccessfullMessage(){
         return cy.get(this.webLocators.orderSuccessfullMessage)
     }
@@ -94,6 +101,9 @@ export class shippingDetailsPages{
         expect(actualText.trim()).to.eq(totalWithDollar);
     
   });
+
+
+ 
 
 }
 
